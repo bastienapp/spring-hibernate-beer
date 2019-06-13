@@ -8,36 +8,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class BrewerController{
+public class BrewerController {
 
     @Autowired
-    private BrewerRepository repository;
+    private BrewerRepository brewerRepository;
 
-    @GetMapping("/brewer")
+    @GetMapping("/brewers")
     public List<Brewer> read() {
-        return repository.findAll();
+        return brewerRepository.findAll();
     }
 
-    @GetMapping("/brewer/{id}")
+    @GetMapping("/brewers/{id}")
     public Brewer read(@PathVariable Long id) {
-        return repository.findById(id).get();
+        return brewerRepository.findById(id).get();
     }
 
-    @PostMapping("/brewer")
+    @PostMapping("/brewers")
     public Brewer create(@RequestBody Brewer brewer) {
-        return repository.save(brewer);
+        return brewerRepository.save(brewer);
     }
 
-    @PutMapping("/brewer/{id}")
-    public Brewer update(@PathVariable Long id, @RequestBody Brewer broModif) {
-        Brewer broBdd = repository.findById(id).get();
-        broBdd.setName(broModif.getName());
-        broBdd.setLocation(broModif.getLocation());
-        return repository.save(broBdd);
+    @PutMapping("/brewers/{id}")
+    public Brewer update(@PathVariable Long id, @RequestBody Brewer brewer) {
+        Brewer brewerToUpdate = brewerRepository.findById(id).get();
+        if (brewer.getName() != null) {
+            brewerToUpdate.setName(brewer.getName());
+        }
+        if (brewer.getLocation() != null) {
+            brewerToUpdate.setLocation(brewer.getLocation());
+        }
+        return brewerRepository.save(brewerToUpdate);
     }
 
-    @DeleteMapping("/brewer/{id}")
-    public void delate(@PathVariable Long id) {
-        repository.deleteById(id);
+    @DeleteMapping("/brewers/{id}")
+    public void delete(@PathVariable Long id) {
+        brewerRepository.deleteById(id);
     }
 }

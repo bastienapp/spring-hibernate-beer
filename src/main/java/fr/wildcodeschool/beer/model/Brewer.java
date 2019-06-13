@@ -1,8 +1,8 @@
 package fr.wildcodeschool.beer.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,13 +11,17 @@ public class Brewer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
+    @NotNull
+    @NotEmpty
     private String name;
+
+    @NotNull
+    @NotEmpty
     private String location;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "brewer")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "brewer")
     private List<Beer> beers;
 
     public Brewer() {
