@@ -7,6 +7,8 @@ import fr.wildcodeschool.beer.repository.BrewerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class BeerController {
 
@@ -24,15 +26,14 @@ public class BeerController {
         return beerRepository.save(beer);
     }
 
+    @GetMapping("/beers")
+    public List<Beer> read() {
+        return beerRepository.findAll();
+    }
 
     @GetMapping("/beers/{id}")
     public Beer read(@PathVariable Long id) {
         return beerRepository.findById(id).get();
-    }
-
-    @PostMapping("/beers")
-    public Beer create(@RequestBody Beer beer) {
-        return beerRepository.save(beer);
     }
 
     @PutMapping("/beers/{id}")

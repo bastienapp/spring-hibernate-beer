@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Beer implements Serializable {
@@ -25,6 +27,16 @@ public class Beer implements Serializable {
     @JoinColumn(nullable = false)
     @JsonIgnore
     private Brewer brewer;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "beer_ingredient",
+            joinColumns = {@JoinColumn(nullable = false)},
+            inverseJoinColumns = {@JoinColumn(nullable = false)})
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public Beer() {
     }
@@ -59,5 +71,13 @@ public class Beer implements Serializable {
 
     public void setBrewer(Brewer brewer) {
         this.brewer = brewer;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
