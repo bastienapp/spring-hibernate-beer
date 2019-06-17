@@ -34,8 +34,8 @@ public class Beer implements Serializable {
                     CascadeType.MERGE
             })
     @JoinTable(name = "beer_ingredient",
-            joinColumns = {@JoinColumn(nullable = false)},
-            inverseJoinColumns = {@JoinColumn(nullable = false)})
+            joinColumns = {@JoinColumn(name = "ingredient_id")},
+            inverseJoinColumns = {@JoinColumn(name = "beer_id")})
     private List<Ingredient> ingredients = new ArrayList<>();
 
     public Beer() {
