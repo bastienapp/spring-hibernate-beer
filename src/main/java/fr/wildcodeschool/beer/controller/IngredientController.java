@@ -25,7 +25,7 @@ public class IngredientController {
         return ingredientRepository.save(ingredient);
     }
 
-    @PostMapping("/beers/{beerId}/ingredients/{ingredientId}")
+    @PutMapping("/beers/{beerId}/ingredients/{ingredientId}")
     public Ingredient map(@PathVariable Long beerId,
                              @PathVariable Long ingredientId) {
         Beer beer = beerRepository.findById(beerId).get();
